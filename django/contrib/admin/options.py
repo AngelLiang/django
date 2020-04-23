@@ -1536,6 +1536,7 @@ class ModelAdmin(BaseModelAdmin):
 
         if add:
             if not self.has_add_permission(request):
+                # 没有添加权限
                 raise PermissionDenied
             obj = None
 
@@ -1544,9 +1545,11 @@ class ModelAdmin(BaseModelAdmin):
 
             if request.method == 'POST':
                 if not self.has_change_permission(request, obj):
+                    # 没有修改权限
                     raise PermissionDenied
             else:
                 if not self.has_view_or_change_permission(request, obj):
+                    # 没有查看权限
                     raise PermissionDenied
 
             if obj is None:
@@ -1562,14 +1565,14 @@ class ModelAdmin(BaseModelAdmin):
                 new_object = form.instance
             formsets, inline_instances = self._create_formsets(request, new_object, change=not add)
             if all_valid(formsets) and form_validated:
-                self.save_model(request, new_object, form, not add)
-                self.save_related(request, form, formsets, not add)
+                self.save_model(request, new_object, form, not add)  # 保存model
+                self.save_related(request, form, formsets, not add)  # 保存关系
                 change_message = self.construct_change_message(request, form, formsets, add)
                 if add:
-                    self.log_addition(request, new_object, change_message)
+                    self.log_addition(request, new_object, change_message)  # 添加日志
                     return self.response_add(request, new_object)
                 else:
-                    self.log_change(request, new_object, change_message)
+                    self.log_change(request, new_object, change_message)  # 修改日志
                     return self.response_change(request, new_object)
             else:
                 form_validated = False

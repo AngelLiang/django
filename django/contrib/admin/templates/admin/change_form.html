@@ -13,6 +13,7 @@
 {% block bodyclass %}{{ block.super }} app-{{ opts.app_label }} model-{{ opts.model_name }} change-form{% endblock %}
 
 {% if not is_popup %}
+{% comment %} 导航栏 {% endcomment %}
 {% block breadcrumbs %}
 <div class="breadcrumbs">
 <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
@@ -23,6 +24,7 @@
 {% endblock %}
 {% endif %}
 
+{% comment %} 主要内容 {% endcomment %}
 {% block content %}<div id="content-main">
 {% block object-tools %}
 {% if change %}{% if not is_popup %}
@@ -53,6 +55,7 @@
 
 {% block after_field_sets %}{% endblock %}
 
+{% comment %} inline {% endcomment %}
 {% block inline_field_sets %}
 {% for inline_admin_formset in inline_admin_formsets %}
     {% include inline_admin_formset.opts.template %}

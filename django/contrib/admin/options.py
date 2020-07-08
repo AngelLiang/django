@@ -1665,6 +1665,7 @@ class ModelAdmin(BaseModelAdmin):
         from django.contrib.admin.views.main import ERROR_FLAG
         opts = self.model._meta
         app_label = opts.app_label
+        # 检查权限
         if not self.has_view_or_change_permission(request):
             raise PermissionDenied
 
@@ -1730,6 +1731,7 @@ class ModelAdmin(BaseModelAdmin):
 
         # Handle POSTed bulk-edit data.
         if request.method == 'POST' and cl.list_editable and '_save' in request.POST:
+            # 检查权限
             if not self.has_change_permission(request):
                 raise PermissionDenied
             FormSet = self.get_changelist_formset(request)
@@ -1784,18 +1786,22 @@ class ModelAdmin(BaseModelAdmin):
             cl.result_count
         )
 
+        # 上下文
         context = {
             **self.admin_site.each_context(request),
             'module_name': str(opts.verbose_name_plural),
             'selection_note': _('0 of %(cnt)s selected') % {'cnt': len(cl.result_list)},
             'selection_note_all': selection_note_all % {'total_count': cl.result_count},
+            # 标题
             'title': cl.title,
             'is_popup': cl.is_popup,
             'to_field': cl.to_field,
-            'cl': cl,
+            'cl': cl,  # ChangeList
             'media': media,
+            # 有添加权限
             'has_add_permission': self.has_add_permission(request),
             'opts': cl.opts,
+            # action
             'action_form': action_form,
             'actions_on_top': self.actions_on_top,
             'actions_on_bottom': self.actions_on_bottom,

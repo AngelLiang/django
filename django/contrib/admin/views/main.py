@@ -239,7 +239,9 @@ class ChangeList:
         # 查询结果
         self.result_list = result_list
         self.can_show_all = can_show_all
+        # 多页
         self.multi_page = multi_page
+        # 分页器
         self.paginator = paginator
 
     def _get_default_ordering(self):

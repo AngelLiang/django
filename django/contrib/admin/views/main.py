@@ -205,6 +205,9 @@ class ChangeList:
         return '?%s' % urlencode(sorted(p.items()))
 
     def get_results(self, request):
+        """可以覆写该方法，增加更多的显示字段"""
+
+        # 分页
         paginator = self.model_admin.get_paginator(request, self.queryset, self.list_per_page)
         # Get the number of objects, with admin filters applied.
         result_count = paginator.count
@@ -231,7 +234,9 @@ class ChangeList:
         # Admin actions are shown if there is at least one entry
         # or if entries are not counted because show_full_result_count is disabled
         self.show_admin_actions = not self.show_full_result_count or bool(full_result_count)
+        # 总数
         self.full_result_count = full_result_count
+        # 查询结果
         self.result_list = result_list
         self.can_show_all = can_show_all
         self.multi_page = multi_page

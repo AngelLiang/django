@@ -26,6 +26,7 @@
 {% block bodyclass %}{{ block.super }} app-{{ opts.app_label }} model-{{ opts.model_name }} change-list{% endblock %}
 
 {% if not is_popup %}
+{% comment %} 导航栏 {% endcomment %}
 {% block breadcrumbs %}
 <div class="breadcrumbs">
 <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
@@ -37,6 +38,7 @@
 
 {% block coltype %}flex{% endblock %}
 
+{% comment %} 主体 {% endcomment %}
 {% block content %}
   <div id="content-main">
     {% block object-tools %}
@@ -53,9 +55,12 @@
         {{ cl.formset.non_form_errors }}
     {% endif %}
     <div class="module{% if cl.has_filters %} filtered{% endif %}" id="changelist">
+      {% comment %} 查询表单 {% endcomment %}
       {% block search %}{% search_form cl %}{% endblock %}
+      {% comment %} 日期分层 {% endcomment %}
       {% block date_hierarchy %}{% if cl.date_hierarchy %}{% date_hierarchy cl %}{% endif %}{% endblock %}
 
+      {% comment %} 过滤筛选 {% endcomment %}
       {% block filters %}
         {% if cl.has_filters %}
           <div id="changelist-filter">
@@ -71,10 +76,14 @@
       {% endif %}
 
       {% block result_list %}
+          {% comment %} 顶部按钮 {% endcomment %}
           {% if action_form and actions_on_top and cl.show_admin_actions %}{% admin_actions %}{% endif %}
+          {% comment %} 表格 {% endcomment %}
           {% result_list cl %}
+          {% comment %} 底部按钮 {% endcomment %}
           {% if action_form and actions_on_bottom and cl.show_admin_actions %}{% admin_actions %}{% endif %}
       {% endblock %}
+      {% comment %} 分页 {% endcomment %}
       {% block pagination %}{% pagination cl %}{% endblock %}
       </form>
     </div>

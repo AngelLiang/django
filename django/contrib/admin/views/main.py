@@ -52,6 +52,7 @@ class ChangeList:
         self.list_select_related = list_select_related
         self.list_per_page = list_per_page
         self.list_max_show_all = list_max_show_all
+        # ModelAdmin
         self.model_admin = model_admin
         self.preserved_filters = model_admin.get_preserved_filters(request)
         self.sortable_by = sortable_by

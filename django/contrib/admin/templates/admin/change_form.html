@@ -51,16 +51,20 @@
 {% endfor %}
 {% endblock %}
 
+{% comment %} 字段集合之后 {% endcomment %}
 {% block after_field_sets %}{% endblock %}
 
+{% comment %} 渲染 linine {% endcomment %}
 {% block inline_field_sets %}
 {% for inline_admin_formset in inline_admin_formsets %}
     {% include inline_admin_formset.opts.template %}
 {% endfor %}
 {% endblock %}
 
+{% comment %} 关系对象之后 {% endcomment %}
 {% block after_related_objects %}{% endblock %}
 
+{% comment %} 底部提交按钮 {% endcomment %}
 {% block submit_buttons_bottom %}{% submit_row %}{% endblock %}
 
 {% block admin_change_form_document_ready %}

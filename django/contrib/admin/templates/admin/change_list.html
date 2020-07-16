@@ -10,6 +10,7 @@
   {% if cl.formset or action_form %}
     <script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
   {% endif %}
+  {% comment %} 添加 media.css {% endcomment %}
   {{ media.css }}
   {% if not actions_on_top and not actions_on_bottom %}
     <style>
@@ -20,6 +21,7 @@
 
 {% block extrahead %}
 {{ block.super }}
+{% comment %} 添加 media.js {% endcomment %}
 {{ media.js }}
 {% endblock %}
 
@@ -54,6 +56,7 @@
         </p>
         {{ cl.formset.non_form_errors }}
     {% endif %}
+    {% comment %} 过滤器 {% endcomment %}
     <div class="module{% if cl.has_filters %} filtered{% endif %}" id="changelist">
       {% comment %} 查询表单 {% endcomment %}
       {% block search %}{% search_form cl %}{% endblock %}

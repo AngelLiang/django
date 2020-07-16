@@ -298,8 +298,10 @@ class AdminSite:
             'site_title': self.site_title,
             'site_header': self.site_header,
             'site_url': site_url,
+            # 是否有权限
             'has_permission': self.has_permission(request),
             'available_apps': self.get_app_list(request),
+            # 弹出？
             'is_popup': False,
         }
 

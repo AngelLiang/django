@@ -667,8 +667,10 @@ class ModelAdmin(BaseModelAdmin):
             fields = kwargs.pop('fields')
         else:
             fields = flatten_fieldsets(self.get_fieldsets(request, obj))
+        # 排除字段
         excluded = self.get_exclude(request, obj)
         exclude = [] if excluded is None else list(excluded)
+        # 只读字段
         readonly_fields = self.get_readonly_fields(request, obj)
         exclude.extend(readonly_fields)
         # Exclude all fields if it's a change form and the user doesn't have
@@ -1116,6 +1118,7 @@ class ModelAdmin(BaseModelAdmin):
             self.save_formset(request, form, formset, change=change)
 
     def render_change_form(self, request, context, add=False, change=False, form_url='', obj=None):
+        """渲染修改表单"""
         opts = self.model._meta
         app_label = opts.app_label
         preserved_filters = self.get_preserved_filters(request)
@@ -1529,6 +1532,7 @@ class ModelAdmin(BaseModelAdmin):
         model = self.model
         opts = model._meta
 
+        # 保存为新的
         if request.method == 'POST' and '_saveasnew' in request.POST:
             object_id = None
 
@@ -1537,7 +1541,7 @@ class ModelAdmin(BaseModelAdmin):
         if add:
             if not self.has_add_permission(request):
                 raise PermissionDenied
-            obj = None
+            obj = None  # 添加数据的原理是，根据传入的表单数据来创建新的对象
 
         else:
             obj = self.get_object(request, unquote(object_id), to_field)
@@ -1550,7 +1554,9 @@ class ModelAdmin(BaseModelAdmin):
 
         ModelForm = self.get_form(request, obj, change=not add)
         if request.method == 'POST':
+            # 获取表单
             form = ModelForm(request.POST, request.FILES, instance=obj)
+            # 表演是否校验成功
             form_validated = form.is_valid()
             if form_validated:
                 new_object = self.save_form(request, form, change=not add)
@@ -1563,22 +1569,27 @@ class ModelAdmin(BaseModelAdmin):
                 change_message = self.construct_change_message(request, form, formsets, add)
                 if add:
                     self.log_addition(request, new_object, change_message)
+                    # 添加响应
                     return self.response_add(request, new_object)
                 else:
                     self.log_change(request, new_object, change_message)
+                    # 修改响应
                     return self.response_change(request, new_object)
             else:
                 form_validated = False
         else:
+            # GET 新建数据的页面
             if add:
                 initial = self.get_changeform_initial_data(request)
                 form = ModelForm(initial=initial)
                 formsets, inline_instances = self._create_formsets(request, form.instance, change=False)
             else:
+                # 修改页面
                 form = ModelForm(instance=obj)
                 formsets, inline_instances = self._create_formsets(request, obj, change=True)
 
         if not add and not self.has_change_permission(request, obj):
+            # 不是添加也不能修改
             readonly_fields = flatten_fieldsets(self.get_fieldsets(request, obj))
         else:
             readonly_fields = self.get_readonly_fields(request, obj)
@@ -1605,7 +1616,9 @@ class ModelAdmin(BaseModelAdmin):
             **self.admin_site.each_context(request),
             'title': title % opts.verbose_name,
             'adminform': adminForm,
+            # 对象id
             'object_id': object_id,
+            # 原始对象
             'original': obj,
             'is_popup': IS_POPUP_VAR in request.POST or IS_POPUP_VAR in request.GET,
             'to_field': to_field,
@@ -1789,8 +1802,11 @@ class ModelAdmin(BaseModelAdmin):
         # 上下文
         context = {
             **self.admin_site.each_context(request),
+            # 模块名称
             'module_name': str(opts.verbose_name_plural),
+            # 已选数量
             'selection_note': _('0 of %(cnt)s selected') % {'cnt': len(cl.result_list)},
+            # 全部数量
             'selection_note_all': selection_note_all % {'total_count': cl.result_count},
             # 标题
             'title': cl.title,

@@ -108,8 +108,10 @@ class Fieldline:
     def __iter__(self):
         for i, field in enumerate(self.fields):
             if field in self.readonly_fields:
+                # 如果是只读字段，则返回 AdminReadonlyField 对象
                 yield AdminReadonlyField(self.form, field, is_first=(i == 0), model_admin=self.model_admin)
             else:
+                # 普通 AdminField 对象
                 yield AdminField(self.form, field, is_first=(i == 0))
 
     def errors(self):

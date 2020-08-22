@@ -1,5 +1,7 @@
 <fieldset class="module aligned {{ fieldset.classes }}">
+    {% comment %} 字段名称 {% endcomment %}
     {% if fieldset.name %}<h2>{{ fieldset.name }}</h2>{% endif %}
+    {% comment %} 字段描述 {% endcomment %}
     {% if fieldset.description %}
         <div class="description">{{ fieldset.description|safe }}</div>
     {% endif %}
@@ -24,7 +26,7 @@
                         {% endif %}
 
                     {% endif %}
-                    {% comment %} 帮助字段 {% endcomment %}
+                    {% comment %} 字段帮助信息 {% endcomment %}
                     {% if field.field.help_text %}
                         <div class="help">{{ field.field.help_text|safe }}</div>
                     {% endif %}

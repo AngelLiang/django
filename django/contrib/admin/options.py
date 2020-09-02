@@ -464,7 +464,7 @@ class BaseModelAdmin(metaclass=forms.MediaDefiningClass):
 
     def has_add_permission(self, request):
         """
-        Return True if the given request has permission to add an object.
+        Return True if the given request has  to add an object.
         Can be overridden by the user in subclasses.
         """
         opts = self.opts
@@ -473,14 +473,14 @@ class BaseModelAdmin(metaclass=forms.MediaDefiningClass):
 
     def has_change_permission(self, request, obj=None):
         """
-        Return True if the given request has permission to change the given
+        Return True if the given request has  to change the given
         Django model instance, the default implementation doesn't examine the
         `obj` parameter.
 
         Can be overridden by the user in subclasses. In such case it should
-        return True if the given request has permission to change the `obj`
+        return True if the given request has  to change the `obj`
         model instance. If `obj` is None, this should return True if the given
-        request has permission to change *any* object of the given type.
+        request has  to change *any* object of the given type.
         """
         opts = self.opts
         codename = get_permission_codename('change', opts)
@@ -488,14 +488,14 @@ class BaseModelAdmin(metaclass=forms.MediaDefiningClass):
 
     def has_delete_permission(self, request, obj=None):
         """
-        Return True if the given request has permission to change the given
+        Return True if the given request has  to change the given
         Django model instance, the default implementation doesn't examine the
         `obj` parameter.
 
         Can be overridden by the user in subclasses. In such case it should
-        return True if the given request has permission to delete the `obj`
+        return True if the given request has  to delete the `obj`
         model instance. If `obj` is None, this should return True if the given
-        request has permission to delete *any* object of the given type.
+        request has  to delete *any* object of the given type.
         """
         opts = self.opts
         codename = get_permission_codename('delete', opts)
@@ -503,13 +503,13 @@ class BaseModelAdmin(metaclass=forms.MediaDefiningClass):
 
     def has_view_permission(self, request, obj=None):
         """
-        Return True if the given request has permission to view the given
+        Return True if the given request has  to view the given
         Django model instance. The default implementation doesn't examine the
         `obj` parameter.
 
         If overridden by the user in subclasses, it should return True if the
-        given request has permission to view the `obj` model instance. If `obj`
-        is None, it should return True if the request has permission to view
+        given request has  to view the `obj` model instance. If `obj`
+        is None, it should return True if the request has  to view
         any object of the given type.
         """
         opts = self.opts
@@ -525,11 +525,11 @@ class BaseModelAdmin(metaclass=forms.MediaDefiningClass):
 
     def has_module_permission(self, request):
         """
-        Return True if the given request has any permission in the given
+        Return True if the given request has any  in the given
         app label.
 
         Can be overridden by the user in subclasses. In such case it should
-        return True if the given request has permission to view the module on
+        return True if the given request has  to view the module on
         the admin index page and access the module's index page. Overriding it
         does not restrict access to the add, change or delete views. Use
         `ModelAdmin.has_(add|change|delete)_permission` for that.
@@ -674,7 +674,7 @@ class ModelAdmin(BaseModelAdmin):
         readonly_fields = self.get_readonly_fields(request, obj)
         exclude.extend(readonly_fields)
         # Exclude all fields if it's a change form and the user doesn't have
-        # the change permission.
+        # the change .
         if change and hasattr(request, 'user') and not self.has_change_permission(request, obj):
             exclude.extend(fields)
         if excluded is None and hasattr(self.form, '_meta') and self.form._meta.exclude:
@@ -875,8 +875,8 @@ class ModelAdmin(BaseModelAdmin):
                 filtered_actions.append(action)
                 continue
             permission_checks = (
-                getattr(self, 'has_%s_permission' % permission)
-                for permission in callable.allowed_permissions
+                getattr(self, 'has_%s_permission' % )
+                for  in callable.allowed_permissions
             )
             if any(has_permission(request) for has_permission in permission_checks):
                 filtered_actions.append(action)
@@ -2170,7 +2170,7 @@ class InlineModelAdmin(BaseModelAdmin):
         # RemovedInDjango30Warning: obj becomes a mandatory argument.
         if self.opts.auto_created:
             # Auto-created intermediate models don't have their own
-            # permissions. The user needs to have the change permission for the
+            # permissions. The user needs to have the change  for the
             # related model in order to be able to do anything with the
             # intermediate model.
             return self._has_any_perms_for_target_model(request, ['change'])
@@ -2190,8 +2190,8 @@ class InlineModelAdmin(BaseModelAdmin):
 
     def has_view_permission(self, request, obj=None):
         if self.opts.auto_created:
-            # Same comment as has_add_permission(). The 'change' permission
-            # also implies the 'view' permission.
+            # Same comment as has_add_permission(). The 'change' 
+            # also implies the 'view' .
             return self._has_any_perms_for_target_model(request, ['view', 'change'])
         return super().has_view_permission(request)
 

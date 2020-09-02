@@ -54,6 +54,7 @@ class ModelBackend:
         perm_cache_name = '_%s_perm_cache' % from_name
         if not hasattr(user_obj, perm_cache_name):
             if user_obj.is_superuser:
+                # 超级管理员能获取所有权限
                 perms = Permission.objects.all()
             else:
                 perms = getattr(self, '_get_%s_permissions' % from_name)(user_obj)

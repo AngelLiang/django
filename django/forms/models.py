@@ -467,6 +467,7 @@ class BaseModelForm(BaseForm):
 
 
 class ModelForm(BaseModelForm, metaclass=ModelFormMetaclass):
+    """元类"""
     pass
 
 

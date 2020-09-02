@@ -27,8 +27,11 @@
         <tbody>
         {% for action in action_list %}
         <tr>
+            {% comment %} 获取操作时间 {% endcomment %}
             <th scope="row">{{ action.action_time|date:"DATETIME_FORMAT" }}</th>
+            {% comment %} 获取操作者名称 {% endcomment %}
             <td>{{ action.user.get_username }}{% if action.user.get_full_name %} ({{ action.user.get_full_name }}){% endif %}</td>
+            {% comment %} 获取修改的信息 {% endcomment %}
             <td>{{ action.get_change_message }}</td>
         </tr>
         {% endfor %}

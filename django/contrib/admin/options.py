@@ -1547,6 +1547,7 @@ class ModelAdmin(BaseModelAdmin):
             obj = self.get_object(request, unquote(object_id), to_field)
 
             if not self.has_view_or_change_permission(request, obj):
+                # 没有查看或修改权限 抛出异常
                 raise PermissionDenied
 
             if obj is None:

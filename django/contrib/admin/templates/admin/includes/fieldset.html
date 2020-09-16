@@ -1,7 +1,7 @@
 <fieldset class="module aligned {{ fieldset.classes }}">
-    {% comment %} 字段名称 {% endcomment %}
+    {% comment %} 栏目名称 {% endcomment %}
     {% if fieldset.name %}<h2>{{ fieldset.name }}</h2>{% endif %}
-    {% comment %} 字段描述 {% endcomment %}
+    {% comment %} 栏目描述 {% endcomment %}
     {% if fieldset.description %}
         <div class="description">{{ fieldset.description|safe }}</div>
     {% endif %}
@@ -12,6 +12,7 @@
             {% for field in line %}
                 <div{% if not line.fields|length_is:'1' %} class="fieldBox{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% if not field.is_readonly and field.errors %} errors{% endif %}{% if field.field.is_hidden %} hidden{% endif %}"{% elif field.is_checkbox %} class="checkbox-row"{% endif %}>
                     {% if not line.fields|length_is:'1' and not field.is_readonly %}{{ field.errors }}{% endif %}
+                    {% comment %} 单选框 {% endcomment %}
                     {% if field.is_checkbox %}
                         {{ field.field }}{{ field.label_tag }}
                     {% else %}

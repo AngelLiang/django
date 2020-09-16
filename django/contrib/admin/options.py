@@ -1615,12 +1615,15 @@ class ModelAdmin(BaseModelAdmin):
             title = _('View %s')
         context = {
             **self.admin_site.each_context(request),
+            # 标题
             'title': title % opts.verbose_name,
+            # 表单
             'adminform': adminForm,
             # 对象id
             'object_id': object_id,
             # 原始对象
             'original': obj,
+            # 弹窗
             'is_popup': IS_POPUP_VAR in request.POST or IS_POPUP_VAR in request.GET,
             'to_field': to_field,
             'media': media,

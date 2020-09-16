@@ -1,0 +1,12 @@
+-   admin: 自动化的站点管理工具。
+-   admindocs: 为 Django admin 站点提供自动文档。
+-   auth: Django 的用户验证框架。
+-   contenttypes: 这是一个用于引入文档类型的框架，每个安装的 Django 模块作为一种独立的文档类型。 这个框架主要在 Django 内部被其他应用使用，它主要面向 Django 的高级开发者。可以通过阅读源码来了解关于这个框架的更多信息，源码的位置在 django/contrib/contenttypes/。
+-   flatpages: 一个在数据库中管理单一 HTML 内容的模块。
+-   gis: 为 Django 提供 GIS（Geographic Information Systems）支持的扩展。 举个例子，它允许你的 Django 模型保存地理学数据并执行地理学查询。请参看 http://geodjango.org/ 上的文档。
+-   humanize: 一系列 Django 模块过滤器，用于增加数据的人性化。
+-   redirects: 用来管理重定向的框架。
+-   sessions: Django 的会话框架。
+-   sitemaps: 用来生成网站地图的 XML 文件的框架。
+-   sites: 一个让你可以在同一个数据库与 Django 安装中管理多个网站的框架。
+-   syndication: 一个用 RSS 和 Atom 来生成聚合订阅源的的框架。

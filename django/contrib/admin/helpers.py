@@ -68,6 +68,7 @@ class AdminForm:
 
 
 class Fieldset:
+    """Fieldset类"""
     def __init__(self, form, name=None, readonly_fields=(), fields=(), classes=(),
                  description=None, model_admin=None):
         self.form = form

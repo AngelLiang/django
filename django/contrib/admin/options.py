@@ -1601,6 +1601,7 @@ class ModelAdmin(BaseModelAdmin):
             self.get_prepopulated_fields(request, obj) if add or self.has_change_permission(request, obj) else {},
             readonly_fields,
             model_admin=self)
+        # 获取 media
         media = self.media + adminForm.media
 
         inline_formsets = self.get_inline_formsets(request, formsets, inline_instances, obj)
@@ -1626,6 +1627,7 @@ class ModelAdmin(BaseModelAdmin):
             # 弹窗
             'is_popup': IS_POPUP_VAR in request.POST or IS_POPUP_VAR in request.GET,
             'to_field': to_field,
+            # 添加 media 到模板
             'media': media,
             'inline_admin_formsets': inline_formsets,
             'errors': helpers.AdminErrorList(form, formsets),

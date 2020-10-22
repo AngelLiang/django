@@ -91,6 +91,7 @@ class HttpRequest:
         return host
 
     def get_host(self):
+        """从请求中获取主机信息"""
         """Return the HTTP host using the environment or request headers."""
         host = self._get_raw_host()
 
@@ -111,6 +112,7 @@ class HttpRequest:
             raise DisallowedHost(msg)
 
     def get_port(self):
+        """从请求中获取端口信息"""
         """Return the port number for the request as a string."""
         if settings.USE_X_FORWARDED_PORT and 'HTTP_X_FORWARDED_PORT' in self.META:
             port = self.META['HTTP_X_FORWARDED_PORT']

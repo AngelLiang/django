@@ -15,6 +15,7 @@ class AuthConfig(AppConfig):
     verbose_name = _("Authentication and Authorization")
 
     def ready(self):
+        # 注册在 migrate 结束后自动创建权限
         post_migrate.connect(
             create_permissions,
             dispatch_uid="django.contrib.auth.management.create_permissions"
@@ -24,5 +25,7 @@ class AuthConfig(AppConfig):
         if isinstance(last_login_field, DeferredAttribute):
             from .models import update_last_login
             user_logged_in.connect(update_last_login, dispatch_uid='update_last_login')
+        # 用户模型
         checks.register(check_user_model, checks.Tags.models)
+        # 模型权限
         checks.register(check_models_permissions, checks.Tags.models)

@@ -33,6 +33,7 @@ def _get_builtin_permissions(opts):
 
 
 def create_permissions(app_config, verbosity=2, interactive=True, using=DEFAULT_DB_ALIAS, apps=global_apps, **kwargs):
+    """创建权限"""
     if not app_config.models_module:
         return
 

@@ -17,9 +17,11 @@
     {% for app in app_list %}
         <div class="app-{{ app.app_label }} module">
         <table>
+        {% comment %} 模块标题 {% endcomment %}
         <caption>
             <a href="{{ app.app_url }}" class="section" title="{% blocktrans with name=app.name %}Models in the {{ name }} application{% endblocktrans %}">{{ app.name }}</a>
         </caption>
+        {% comment %} 遍历模型 {% endcomment %}
         {% for model in app.models %}
             <tr class="model-{{ model.object_name|lower }}">
             {% if model.admin_url %}
@@ -28,6 +30,7 @@
                 <th scope="row">{{ model.name }}</th>
             {% endif %}
 
+            {% comment %} 新建链接 {% endcomment %}
             {% if model.add_url %}
                 <td><a href="{{ model.add_url }}" class="addlink">{% trans 'Add' %}</a></td>
             {% else %}
@@ -36,8 +39,10 @@
 
             {% if model.admin_url %}
                 {% if model.view_only %}
+                {% comment %} 查看链接 {% endcomment %}
                 <td><a href="{{ model.admin_url }}" class="viewlink">{% trans 'View' %}</a></td>
                 {% else %}
+                {% comment %} 修改链接 {% endcomment %}
                 <td><a href="{{ model.admin_url }}" class="changelink">{% trans 'Change' %}</a></td>
                 {% endif %}
             {% else %}

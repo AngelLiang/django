@@ -226,10 +226,13 @@ class BaseModelAdmin(metaclass=forms.MediaDefiningClass):
 
         if 'widget' not in kwargs:
             if db_field.name in self.get_autocomplete_fields(request):
+                # 自动完成匹配下拉框
                 kwargs['widget'] = AutocompleteSelect(db_field.remote_field, self.admin_site, using=db)
             elif db_field.name in self.raw_id_fields:
+                # 外键id
                 kwargs['widget'] = widgets.ForeignKeyRawIdWidget(db_field.remote_field, self.admin_site, using=db)
             elif db_field.name in self.radio_fields:
+                # RadioSelect
                 kwargs['widget'] = widgets.AdminRadioSelect(attrs={
                     'class': get_ul_class(self.radio_fields[db_field.name]),
                 })

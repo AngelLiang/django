@@ -50,6 +50,7 @@ def create_permissions(app_config, verbosity=2, interactive=True, using=DEFAULT_
     except LookupError:
         return
 
+    # 不允许迁移权限数据，则返回
     if not router.allow_migrate_model(using, Permission):
         return
 

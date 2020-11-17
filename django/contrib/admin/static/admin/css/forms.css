@@ -276,15 +276,20 @@ body.popup .submit-row {
     margin: 0.3em;
 }
 
+/* 删除链接box */
 .submit-row p.deletelink-box {
     float: left;
     margin: 0;
 }
 
+/* 删除链接 基本配置 */
 .submit-row a.deletelink {
+    /* 元素显示在下一行 */
     display: block;
+    /* 背景颜色 */
     background: #ba2121;
     border-radius: 4px;
+    /* 填充 上下10px 左右15px */
     padding: 10px 15px;
     height: 15px;
     line-height: 15px;
@@ -302,12 +307,14 @@ body.popup .submit-row {
     color: #fff;
 }
 
+/* 删除链接 焦点 悬停 点击未释放 */
 .submit-row a.deletelink:focus,
 .submit-row a.deletelink:hover,
 .submit-row a.deletelink:active {
     background: #a41515;
 }
 
+/* 关闭链接 焦点 悬停 点击未释放 */
 .submit-row a.closelink:focus,
 .submit-row a.closelink:hover,
 .submit-row a.closelink:active {

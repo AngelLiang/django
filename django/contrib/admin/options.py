@@ -613,11 +613,16 @@ class ModelAdmin(BaseModelAdmin):
         info = self.model._meta.app_label, self.model._meta.model_name
 
         urlpatterns = [
+            # 模型列表
             path('', wrap(self.changelist_view), name='%s_%s_changelist' % info),
+            # 添加模型
             path('add/', wrap(self.add_view), name='%s_%s_add' % info),
             path('autocomplete/', wrap(self.autocomplete_view), name='%s_%s_autocomplete' % info),
+            # 历史
             path('<path:object_id>/history/', wrap(self.history_view), name='%s_%s_history' % info),
+            # 删除
             path('<path:object_id>/delete/', wrap(self.delete_view), name='%s_%s_delete' % info),
+            # 修改
             path('<path:object_id>/change/', wrap(self.change_view), name='%s_%s_change' % info),
             # For backwards compatibility (was the change url before 1.9)
             path('<path:object_id>/', wrap(RedirectView.as_view(

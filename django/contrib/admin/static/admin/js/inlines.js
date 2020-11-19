@@ -55,7 +55,9 @@
                     addButton = $parent.find("tr:last a");
                 } else {
                     // Otherwise, insert it immediately after the last form:
+                    // 添加 button
                     $this.filter(":last").after('<div class="' + options.addCssClass + '"><a href="#">' + options.addText + "</a></div>");
+                    // 查找button
                     addButton = $this.filter(":last").next().find("a");
                 }
             }

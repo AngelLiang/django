@@ -59,7 +59,7 @@
                     addButton = $this.filter(":last").next().find("a");
                 }
             }
-            // 添加按钮
+            // 添加点击事件
             addButton.on('click', function(e) {
                 e.preventDefault();
                 // 获取空的inline
@@ -86,15 +86,18 @@
                 row.find("*").each(function() {
                     updateElementIndex(this, options.prefix, totalForms.val());
                 });
+                // 添加到表单里
                 // Insert the new form when it has been fully edited
                 row.insertBefore($(template));
                 // Update number of total forms
                 $(totalForms).val(parseInt(totalForms.val(), 10) + 1);
                 nextIndex += 1;
+                // 达到最大值后隐藏添加按钮
                 // Hide add button in case we've hit the max, except we want to add infinitely
                 if ((maxForms.val() !== '') && (maxForms.val() - totalForms.val()) <= 0) {
                     addButton.parent().hide();
                 }
+                // 添加删除事件
                 // The delete button of each row triggers a bunch of other things
                 row.find("a." + options.deleteCssClass).on('click', function(e1) {
                     e1.preventDefault();
@@ -105,7 +108,7 @@
                     if (options.removed) {
                         options.removed(row);
                     }
-                    // 添加 formset:removed 事件
+                    // 触发 formset:removed 事件
                     $(document).trigger('formset:removed', [row, options.prefix]);
                     // Update the TOTAL_FORMS form count.
                     var forms = $("." + options.formCssClass);
@@ -129,7 +132,7 @@
                 if (options.added) {
                     options.added(row);
                 }
-                // 添加 formset:added 事件
+                // 触发 formset:added 事件
                 $(document).trigger('formset:added', [row, options.prefix]);
             });
         }

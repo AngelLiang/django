@@ -17,6 +17,7 @@
  */
 (function($) {
     'use strict';
+    // formset 初始化
     $.fn.formset = function(opts) {
         var options = $.extend({}, $.fn.formset.defaults, opts);
         var $this = $(this);
@@ -58,10 +59,14 @@
                     addButton = $this.filter(":last").next().find("a");
                 }
             }
+            // 添加按钮
             addButton.on('click', function(e) {
                 e.preventDefault();
+                // 获取空的inline
                 var template = $("#" + options.prefix + "-empty");
+                // 拷贝template
                 var row = template.clone(true);
+                // 移除 empty-form 添加 dynamic-form
                 row.removeClass(options.emptyCssClass)
                 .addClass(options.formCssClass)
                 .attr("id", options.prefix + "-" + nextIndex);
@@ -100,6 +105,7 @@
                     if (options.removed) {
                         options.removed(row);
                     }
+                    // 添加 formset:removed 事件
                     $(document).trigger('formset:removed', [row, options.prefix]);
                     // Update the TOTAL_FORMS form count.
                     var forms = $("." + options.formCssClass);
@@ -123,6 +129,7 @@
                 if (options.added) {
                     options.added(row);
                 }
+                // 添加 formset:added 事件
                 $(document).trigger('formset:added', [row, options.prefix]);
             });
         }

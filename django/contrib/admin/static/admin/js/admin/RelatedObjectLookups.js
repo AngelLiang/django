@@ -32,6 +32,7 @@
                 href += '&_popup=1';
             }
         }
+        // 关系对象弹窗配置 500 x 800
         var win = window.open(href, name, 'height=500,width=800,resizable=yes,scrollbars=yes');
         win.focus();
         return false;

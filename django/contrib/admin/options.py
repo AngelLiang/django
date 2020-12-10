@@ -1028,8 +1028,10 @@ class ModelAdmin(BaseModelAdmin):
             orm_lookups = [construct_search(str(search_field))
                            for search_field in search_fields]
             for bit in search_term.split():
+                # 生成“或”查询语句
                 or_queries = [models.Q(**{orm_lookup: bit})
                               for orm_lookup in orm_lookups]
+                # 拼接“或”查询语句
                 queryset = queryset.filter(reduce(operator.or_, or_queries))
             use_distinct |= any(lookup_needs_distinct(self.opts, search_spec) for search_spec in orm_lookups)
 

@@ -1142,11 +1142,14 @@ class ModelAdmin(BaseModelAdmin):
         context.update({
             'add': add,
             'change': change,
+            # 权限
             'has_view_permission': self.has_view_permission(request, obj),
             'has_add_permission': self.has_add_permission(request),
             'has_change_permission': self.has_change_permission(request, obj),
             'has_delete_permission': self.has_delete_permission(request, obj),
+            # inline可编辑
             'has_editable_inline_admin_formsets': has_editable_inline_admin_formsets,
+            # 有文件域
             'has_file_field': context['adminform'].form.is_multipart() or any(
                 admin_formset.formset.form().is_multipart()
                 for admin_formset in context['inline_admin_formsets']
@@ -1157,6 +1160,7 @@ class ModelAdmin(BaseModelAdmin):
             'opts': opts,
             'content_type_id': get_content_type_for_model(self.model).pk,
             'save_as': self.save_as,
+            # 在顶部的保存按钮
             'save_on_top': self.save_on_top,
             'to_field_var': TO_FIELD_VAR,
             'is_popup_var': IS_POPUP_VAR,
@@ -1567,7 +1571,7 @@ class ModelAdmin(BaseModelAdmin):
         if request.method == 'POST':
             # 获取表单
             form = ModelForm(request.POST, request.FILES, instance=obj)
-            # 表演是否校验成功
+            # 表单是否校验成功
             form_validated = form.is_valid()
             if form_validated:
                 new_object = self.save_form(request, form, change=not add)
@@ -1611,7 +1615,7 @@ class ModelAdmin(BaseModelAdmin):
             self.get_prepopulated_fields(request, obj) if add or self.has_change_permission(request, obj) else {},
             readonly_fields,
             model_admin=self)
-        # 获取 media
+        # 获取表单的 media
         media = self.media + adminForm.media
 
         inline_formsets = self.get_inline_formsets(request, formsets, inline_instances, obj)

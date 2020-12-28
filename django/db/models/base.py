@@ -571,6 +571,7 @@ class Model(metaclass=ModelBase):
     def _set_pk_val(self, value):
         return setattr(self, self._meta.pk.attname, value)
 
+    # 每个模型都有 pk 属性
     pk = property(_get_pk_val, _set_pk_val)
 
     def get_deferred_fields(self):
@@ -908,6 +909,7 @@ class Model(metaclass=ModelBase):
                                using=using, raw=raw)
 
     def delete(self, using=None, keep_parents=False):
+        """删除方法"""
         using = using or router.db_for_write(self.__class__, instance=self)
         assert self.pk is not None, (
             "%s object can't be deleted because its %s attribute is set to None." %

@@ -1614,10 +1614,12 @@ class ModelAdmin(BaseModelAdmin):
             # Clear prepopulated fields on a view-only form to avoid a crash.
             self.get_prepopulated_fields(request, obj) if add or self.has_change_permission(request, obj) else {},
             readonly_fields,
+            # 把 model_admin 也传进来了
             model_admin=self)
         # 获取表单的 media
         media = self.media + adminForm.media
 
+        # 获取 inline 的 media
         inline_formsets = self.get_inline_formsets(request, formsets, inline_instances, obj)
         for inline_formset in inline_formsets:
             media = media + inline_formset.media
@@ -2164,6 +2166,7 @@ class InlineModelAdmin(BaseModelAdmin):
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
+        # 如果没有权限则返回为空
         if not self.has_view_or_change_permission(request):
             queryset = queryset.none()
         return queryset

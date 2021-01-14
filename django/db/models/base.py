@@ -1139,6 +1139,7 @@ class Model(metaclass=ModelBase):
         )
 
     def unique_error_message(self, model_class, unique_check):
+        """唯一错误信息"""
         opts = model_class._meta
 
         params = {

@@ -37,6 +37,7 @@ class LogEntryManager(models.Manager):
 
 
 class LogEntry(models.Model):
+    # 操作时间
     action_time = models.DateTimeField(
         _('action time'),
         default=timezone.now,
@@ -56,6 +57,7 @@ class LogEntry(models.Model):
     object_id = models.TextField(_('object id'), blank=True, null=True)
     # Translators: 'repr' means representation (https://docs.python.org/library/functions.html#repr)
     object_repr = models.CharField(_('object repr'), max_length=200)
+    # 操作标识：创建、修改、删除
     action_flag = models.PositiveSmallIntegerField(_('action flag'), choices=ACTION_FLAG_CHOICES)
     # change_message is either a string or a JSON structure
     change_message = models.TextField(_('change message'), blank=True)

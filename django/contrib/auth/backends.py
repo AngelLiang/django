@@ -77,6 +77,7 @@ class ModelBackend:
         return self._get_permissions(user_obj, obj, 'group')
 
     def get_all_permissions(self, user_obj, obj=None):
+        # 当帐号未启用，或者是匿名用户，或者obj不为空时，返回空集合
         if not user_obj.is_active or user_obj.is_anonymous or obj is not None:
             return set()
         if not hasattr(user_obj, '_perm_cache'):

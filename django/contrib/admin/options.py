@@ -1567,6 +1567,7 @@ class ModelAdmin(BaseModelAdmin):
             if obj is None:
                 return self._get_obj_does_not_exist_redirect(request, opts, object_id)
 
+        # 获取表单实例
         ModelForm = self.get_form(request, obj, change=not add)
         if request.method == 'POST':
             # 获取表单
@@ -1579,7 +1580,10 @@ class ModelAdmin(BaseModelAdmin):
                 new_object = form.instance
             formsets, inline_instances = self._create_formsets(request, new_object, change=not add)
             if all_valid(formsets) and form_validated:
+                # 如果所有formsets都校验正常，并且表单验证通过，如果表单验证不通过，则不会进入这里
+                # 保存当前模型，如果这里抛出异常则页面会出现错误
                 self.save_model(request, new_object, form, not add)
+                # 保存关系模型
                 self.save_related(request, form, formsets, not add)
                 change_message = self.construct_change_message(request, form, formsets, add)
                 if add:

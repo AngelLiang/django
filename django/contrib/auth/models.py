@@ -24,6 +24,7 @@ class PermissionManager(models.Manager):
     use_in_migrations = True
 
     def get_by_natural_key(self, codename, app_label, model):
+        """使用自然键获取权限数据"""
         return self.get(
             codename=codename,
             content_type=ContentType.objects.db_manager(self.db).get_by_natural_key(app_label, model),

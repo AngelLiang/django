@@ -173,9 +173,11 @@ def fields_for_model(model, fields=None, exclude=None, widgets=None,
         elif not callable(formfield_callback):
             raise TypeError('formfield_callback must be a function or callable')
         else:
+            # 调用 formfield_callback
             formfield = formfield_callback(f, **kwargs)
 
         if formfield:
+            # 限制选项
             if apply_limit_choices_to:
                 apply_limit_choices_to_to_formfield(formfield)
             field_list.append((f.name, formfield))

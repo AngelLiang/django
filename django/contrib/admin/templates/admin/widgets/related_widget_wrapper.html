@@ -4,6 +4,7 @@
     {% block links %}
         {% spaceless %}
         {% if not is_hidden %}
+        {% comment %} 可以修改 {% endcomment %}
         {% if can_change_related %}
         <a class="related-widget-wrapper-link change-related" id="change_id_{{ name }}"
             data-href-template="{{ change_related_template_url }}?{{ url_params }}"
@@ -11,6 +12,7 @@
             <img src="{% static 'admin/img/icon-changelink.svg' %}" alt="{% trans 'Change' %}">
         </a>
         {% endif %}
+        {% comment %} 可以添加 {% endcomment %}
         {% if can_add_related %}
         <a class="related-widget-wrapper-link add-related" id="add_id_{{ name }}"
             href="{{ add_related_url }}?{{ url_params }}"
@@ -18,6 +20,7 @@
             <img src="{% static 'admin/img/icon-addlink.svg' %}" alt="{% trans 'Add' %}">
         </a>
         {% endif %}
+        {% comment %} 可以删除 {% endcomment %}
         {% if can_delete_related %}
         <a class="related-widget-wrapper-link delete-related" id="delete_id_{{ name }}"
             data-href-template="{{ delete_related_template_url }}?{{ url_params }}"

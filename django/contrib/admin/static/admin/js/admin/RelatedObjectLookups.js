@@ -57,6 +57,7 @@
         return showAdminPopup(triggeringLink, /^(change|add|delete)_/, false);
     }
 
+    // 更新关联对象的链接
     function updateRelatedObjectLinks(triggeringLink) {
         var $this = $(triggeringLink);
         var siblings = $this.nextAll('.view-related, .change-related, .delete-related');

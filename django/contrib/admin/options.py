@@ -800,6 +800,7 @@ class ModelAdmin(BaseModelAdmin):
         """
         Yield formsets and the corresponding inlines.
         """
+        # inline 只调用 get_formset 方法
         for inline in self.get_inline_instances(request, obj):
             yield inline.get_formset(request, obj), inline
 
@@ -1580,6 +1581,7 @@ class ModelAdmin(BaseModelAdmin):
                 new_object = form.instance
             formsets, inline_instances = self._create_formsets(request, new_object, change=not add)
             if all_valid(formsets) and form_validated:
+                # 先保存当前model，再保存关系model
                 # 如果所有formsets都校验正常，并且表单验证通过，如果表单验证不通过，则不会进入这里
                 # 保存当前模型，如果这里抛出异常则页面会出现错误
                 self.save_model(request, new_object, form, not add)
@@ -1612,6 +1614,7 @@ class ModelAdmin(BaseModelAdmin):
             readonly_fields = flatten_fieldsets(self.get_fieldsets(request, obj))
         else:
             readonly_fields = self.get_readonly_fields(request, obj)
+        # 生成新的 form
         adminForm = helpers.AdminForm(
             form,
             list(self.get_fieldsets(request, obj)),
